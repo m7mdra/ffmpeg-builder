@@ -1,8 +1,10 @@
 package options.model
 
-enum class FrameSize(size: Dimension) {
+enum class FrameSize() {
 
-    sqcif(128 x 96),
-    qqvga(160 x 120)
+    sqcif(),
+    qqvga(),
+    hd720(),
+    hd1080()
     //TODO list other frameSizes
 }
