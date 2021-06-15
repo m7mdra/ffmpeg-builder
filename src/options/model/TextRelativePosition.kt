@@ -1,6 +1,6 @@
 package options.model
 
-enum class TextRelativePosition(value: String) {
+enum class TextRelativePosition(val value: String) {
     TopLeft("x=0:y=0"),
     TopCenter("x=(w-text_w)/2:y=0"),
     TopRight("x=w-tw:y=0"),

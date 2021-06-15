@@ -16,20 +16,11 @@ fun main(args: Array<String>) {
 //        videoOption(BitRate(100000))
 //        videoOption(RelativeScale(RelativeDimension("iw/2", "ih/2")))
 //        videoOption(Scale(200 x 200))
-        videoOption(FileSize(10 * 1024 * 1024))
-
-
-/*        videoOption(ResizeToPredefined(FrameSize.qqvga))
-        videoOption(FrameRate(10))
-        videoOption(BitRate(10))
-        videoOption(FileSize(10 * 1024 * 1024))
-        videoOption(RelativeScale(RelativeDimension("iw/2", "ih/2")))
-        videoOption(Scale(200 x 200))
         videoOption(
             DrawText(
                 DrawTextInput(
                     "Hello",
-                    "",
+                    File("font.otf"),
                     100,
                     "#000",
                     "#fff",
@@ -37,7 +28,15 @@ fun main(args: Array<String>) {
                     5
                 )
             )
-        )*/
+        )
+
+/*        videoOption(ResizeToPredefined(FrameSize.qqvga))
+        videoOption(FrameRate(10))
+        videoOption(BitRate(10))
+        videoOption(FileSize(10 * 1024 * 1024))
+        videoOption(RelativeScale(RelativeDimension("iw/2", "ih/2")))
+        videoOption(Scale(200 x 200))
+        */
     }
     val build = ffmpeg.build()
     println(build)
@@ -84,6 +83,14 @@ class FFMPEGBuilder {
                 is RelativeScale -> stringBuilder.append(" ${it.key}${it.value.widthWithModifier}:${it.value.heightWithModifier}")
                 is Scale -> stringBuilder.append(" ${it.key} ${it.value.width}x${it.value.height}")
                 is FileSize -> stringBuilder.append(" ${it.key} ${it.value}")
+                is DrawText -> {
+                    val textInput = it.value
+                    stringBuilder.append(
+                        " ${it.key}\"fontfile=${textInput.fontPath}:" +
+                                "text='${textInput.text}': fontcolor=white: fontsize=${textInput.fontSize}: box=1: boxcolor=black@0.5: \\\n" +
+                                "boxborderw=5: ${textInput.position.value}\" "
+                    )
+                }
             }
         }
         stringBuilder.append(" $output")
