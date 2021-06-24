@@ -1,7 +1,12 @@
+import filter.DrawText
+import filter.RelativeScale
+import filter.Transpose
+import filter.VideoFilter
+import filter.model.Degree
+import filter.model.DrawTextInput
 import option.*
 import option.model.*
 import java.io.File
-import java.text.SimpleDateFormat
 import java.util.*
 
 fun main(args: Array<String>) {
@@ -19,9 +24,9 @@ fun main(args: Array<String>) {
 
 //         videoOption(RelativeScale(RelativeDimension("iw/2", "ih/2")))
          videoFilter(
-             DrawText1(
+             DrawText(
                  DrawTextInput(
-                     "Site 14564545641564\ndate time ${SimpleDateFormat("dd-mm-yyyy HH-MM-ss").format(Date())}\ncoor 15.2546 35.25165",
+                     "Site 14564545641564",
                      File("font.otf"),
                      100,
                      "#000",
@@ -31,7 +36,8 @@ fun main(args: Array<String>) {
                  )
              )
          )
-         videoFilter(RelativeScale1(RelativeDimension("iw/2", "ih/2")))
+         videoFilter(RelativeScale(RelativeDimension("iw/2", "ih/2")))
+        videoFilter(Transpose(Degree.CounterCloseWise))
 /*        videoOption(ResizeToPredefined(FrameSize.qqvga))
         videoOption(FrameRate(10))
         videoOption(BitRate(10))
@@ -97,33 +103,28 @@ class FFMPEGBuilder {
                 is BitRate -> stringBuilder.append(" ${it.key} ${it.value}")
                 is Resize -> stringBuilder.append(" ${it.key} ${it.value.width}x${it.value.height}")
                 is ResizeToPredefined -> stringBuilder.append(" ${it.key} ${it.value.name}")
-                is RelativeScale -> stringBuilder.append(" ${it.key}${it.value.widthWithModifier}:${it.value.heightWithModifier}")
                 is Scale -> stringBuilder.append(" ${it.key} ${it.value.width}x${it.value.height}")
                 is FileSize -> stringBuilder.append(" ${it.key} ${it.value}")
-                is DrawText -> {
-                    val textInput = it.value
-                    stringBuilder.append(
-                        " ${it.key}\"fontfile=${textInput.fontPath}:" +
-                                "text='${textInput.text}': fontcolor=white: fontsize=${textInput.fontSize}: box=1: boxcolor=black@0.5: \\\n" +
-                                "boxborderw=5: ${textInput.position.value}\" "
-                    )
-                }
+
             }
         }
         if (videoFilters.isNotEmpty()) {
-            stringBuilder.append(" vf=\"")
+            stringBuilder.append(" -vf \"")
 
             videoFilters.forEach { filter ->
-                if (filter is DrawText1) {
+                if (filter is DrawText) {
                     val textInput = filter.input
                     stringBuilder.append(
                         "${filter.name}=fontfile=${textInput.fontPath}:" +
-                                "text='${textInput.text}': fontcolor=white: fontsize=${textInput.fontSize}: box=1: boxcolor=black@0.5:" +
-                                "boxborderw=5: ${textInput.position.value} ,"
+                                "text='${textInput.text}':fontcolor=white:fontsize=${textInput.fontSize}:box=1:boxcolor=black@0.5:" +
+                                "boxborderw=5:${textInput.position.value},"
                     )
                 }
-                if (filter is RelativeScale1) {
-                    stringBuilder.append("${filter.name}=${filter.input.widthWithModifier}:${filter.input.heightWithModifier}")
+                if (filter is RelativeScale) {
+                    stringBuilder.append(" ${filter.name}=${filter.input.widthWithModifier}:${filter.input.heightWithModifier},")
+                }
+                if(filter is Transpose){
+                    stringBuilder.append(" ${filter.name}=${filter.input.value}")
                 }
             }
             stringBuilder.append("\"")

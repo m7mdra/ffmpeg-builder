@@ -1,5 +1,6 @@
-package option.model
+package filter.model
 
+import option.model.TextRelativePosition
 import java.io.File
 
 class DrawTextInput {
