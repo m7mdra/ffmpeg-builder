@@ -1,13 +1,6 @@
-import filter.DrawText
-import filter.RelativeScale
-import filter.Transpose
-import filter.VideoFilter
-import filter.model.Degree
-import filter.model.DrawTextInput
+import filter.*
 import option.*
-import option.model.*
 import java.io.File
-import java.util.*
 
 fun main(args: Array<String>) {
 
@@ -16,6 +9,8 @@ fun main(args: Array<String>) {
         input("input.mp4")
         output("output.mp4")
         overwriteOutput()
+        videoFilter(VerticalFlip())
+        videoFilter(NoiseReduction())
 //        videoOption(Overlay(OverlayInput(File("overlay.png"), RelativePosition.TopRightCorner)))
 //        videoOption(FrameRate(60))
 //        videoOption(BitRate(100000))
@@ -23,21 +18,21 @@ fun main(args: Array<String>) {
 //        videoOption(Scale(200 x 200))
 
 //         videoOption(RelativeScale(RelativeDimension("iw/2", "ih/2")))
-         videoFilter(
-             DrawText(
-                 DrawTextInput(
-                     "Site 14564545641564",
-                     File("font.otf"),
-                     100,
-                     "#000",
-                     "#fff",
-                     TextRelativePosition.Center,
-                     5
-                 )
-             )
-         )
-         videoFilter(RelativeScale(RelativeDimension("iw/2", "ih/2")))
-        videoFilter(Transpose(Degree.CounterCloseWise))
+//        videoFilter(
+//            DrawText(
+//                DrawTextInput(
+//                    "Site 14564545641564",
+//                    File("font.otf"),
+//                    100,
+//                    "#000",
+//                    "#fff",
+//                    TextRelativePosition.Center,
+//                    5
+//                )
+//            )
+//        )
+//        videoFilter(RelativeScale(RelativeDimension("iw/2", "ih/2")))
+//        videoFilter(Transpose(Degree.CounterCloseWise))
 /*        videoOption(ResizeToPredefined(FrameSize.qqvga))
         videoOption(FrameRate(10))
         videoOption(BitRate(10))
@@ -109,23 +104,37 @@ class FFMPEGBuilder {
             }
         }
         if (videoFilters.isNotEmpty()) {
+            val videoFilterBuild = mutableListOf<String>()
             stringBuilder.append(" -vf \"")
 
             videoFilters.forEach { filter ->
+                val filterName = filter.name
                 if (filter is DrawText) {
                     val textInput = filter.input
-                    stringBuilder.append(
-                        "${filter.name}=fontfile=${textInput.fontPath}:" +
+                    videoFilterBuild.add(
+                        "$filterName=fontfile=${textInput.fontPath}:" +
                                 "text='${textInput.text}':fontcolor=white:fontsize=${textInput.fontSize}:box=1:boxcolor=black@0.5:" +
-                                "boxborderw=5:${textInput.position.value},"
+                                "boxborderw=5:${textInput.position.value}"
                     )
                 }
                 if (filter is RelativeScale) {
-                    stringBuilder.append(" ${filter.name}=${filter.input.widthWithModifier}:${filter.input.heightWithModifier},")
+                    videoFilterBuild.add("$filterName=${filter.input.widthWithModifier}:${filter.input.heightWithModifier}")
                 }
-                if(filter is Transpose){
-                    stringBuilder.append(" ${filter.name}=${filter.input.value}")
+                if (filter is Transpose) {
+                    videoFilterBuild.add("$filterName=${filter.input.value}")
                 }
+                if (filter is VerticalFlip) {
+                    videoFilterBuild.add(filterName)
+                }
+                if(filter is NoiseReduction){
+                    videoFilterBuild.add(filterName)
+                }
+            }
+            println(videoFilterBuild)
+            if (videoFilterBuild.size < 1) {
+                stringBuilder.append(videoFilterBuild.joinToString { "," })
+            } else {
+                stringBuilder.append(videoFilterBuild.joinToString())
             }
             stringBuilder.append("\"")
         }
