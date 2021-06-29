@@ -1,6 +1,6 @@
 package filter
 
-class NoiseReduction : VideoFilter<Unit>("hqdn3d", Unit) {
+class HorizontalFlip : VideoFilter<Unit>("hflip", Unit) {
     override fun build(): String {
         return name
     }

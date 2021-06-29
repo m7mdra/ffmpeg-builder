@@ -1,5 +1,10 @@
 import filter.*
+import filter.model.Degree
+import filter.model.DrawTextInput
 import option.*
+import option.model.RelativeDimension
+import option.model.TextRelativePosition
+import option.model.x
 import java.io.File
 
 fun main(args: Array<String>) {
@@ -8,31 +13,27 @@ fun main(args: Array<String>) {
 
         input("input.mp4")
         output("output.mp4")
-        overwriteOutput()
-        videoFilter(VerticalFlip())
+/*        overwriteOutput()
+        this + VerticalFlip()
+        this + HorizontalFlip()
         videoFilter(NoiseReduction())
-//        videoOption(Overlay(OverlayInput(File("overlay.png"), RelativePosition.TopRightCorner)))
-//        videoOption(FrameRate(60))
-//        videoOption(BitRate(100000))
-//        videoOption(RelativeScale(RelativeDimension("iw/2", "ih/2")))
-//        videoOption(Scale(200 x 200))
 
-//         videoOption(RelativeScale(RelativeDimension("iw/2", "ih/2")))
-//        videoFilter(
-//            DrawText(
-//                DrawTextInput(
-//                    "Site 14564545641564",
-//                    File("font.otf"),
-//                    100,
-//                    "#000",
-//                    "#fff",
-//                    TextRelativePosition.Center,
-//                    5
-//                )
-//            )
-//        )
-//        videoFilter(RelativeScale(RelativeDimension("iw/2", "ih/2")))
-//        videoFilter(Transpose(Degree.CounterCloseWise))
+
+        videoFilter(
+            DrawText(
+                DrawTextInput(
+                    "Site 14564545641564",
+                    File("font.otf"),
+                    100,
+                    "#000",
+                    "#fff",
+                    TextRelativePosition.Center,
+                    5
+                )
+            )
+        )
+        videoFilter(RelativeScale(RelativeDimension("iw/2", "ih/2")))
+        videoFilter(Transpose(Degree.CounterCloseWise))*/
 /*        videoOption(ResizeToPredefined(FrameSize.qqvga))
         videoOption(FrameRate(10))
         videoOption(BitRate(10))
@@ -42,6 +43,11 @@ fun main(args: Array<String>) {
     }
     val build = ffmpeg.build()
     println(build)
+    println(100.k)
+    println(100.MB)
+    println(100.GB)
+    println(100.T)
+
 }
 
 
@@ -104,37 +110,15 @@ class FFMPEGBuilder {
             }
         }
         if (videoFilters.isNotEmpty()) {
-            val videoFilterBuild = mutableListOf<String>()
+            val buildFilters = videoFilters.map { it.build() }
             stringBuilder.append(" -vf \"")
 
-            videoFilters.forEach { filter ->
-                val filterName = filter.name
-                if (filter is DrawText) {
-                    val textInput = filter.input
-                    videoFilterBuild.add(
-                        "$filterName=fontfile=${textInput.fontPath}:" +
-                                "text='${textInput.text}':fontcolor=white:fontsize=${textInput.fontSize}:box=1:boxcolor=black@0.5:" +
-                                "boxborderw=5:${textInput.position.value}"
-                    )
-                }
-                if (filter is RelativeScale) {
-                    videoFilterBuild.add("$filterName=${filter.input.widthWithModifier}:${filter.input.heightWithModifier}")
-                }
-                if (filter is Transpose) {
-                    videoFilterBuild.add("$filterName=${filter.input.value}")
-                }
-                if (filter is VerticalFlip) {
-                    videoFilterBuild.add(filterName)
-                }
-                if(filter is NoiseReduction){
-                    videoFilterBuild.add(filterName)
-                }
-            }
-            println(videoFilterBuild)
-            if (videoFilterBuild.size < 1) {
-                stringBuilder.append(videoFilterBuild.joinToString { "," })
+
+
+            if (buildFilters.size < 1) {
+                stringBuilder.append(buildFilters.joinToString { "," })
             } else {
-                stringBuilder.append(videoFilterBuild.joinToString())
+                stringBuilder.append(buildFilters.joinToString())
             }
             stringBuilder.append("\"")
         }
@@ -155,5 +139,39 @@ fun ffmpeg(builder: FFMPEGBuilder.() -> Unit): FFMPEGBuilder {
     return ffmpegBuilder
 }
 
+operator fun FFMPEGBuilder.plus(filter: VideoFilter<*>) {
+    videoFilter(filter)
+}
 
+operator fun FFMPEGBuilder.plus(option: Option<*>) {
+    videoOption(option)
+}
 
+var Number.k: String
+    get() {
+        return "${this}k"
+    }
+    set(value) {
+        this.k = value
+    }
+var Number.MB: String
+    get() {
+        return "${this}k"
+    }
+    set(value) {
+        this.MB = value
+    }
+var Number.GB: String
+    get() {
+        return "${this}GB"
+    }
+    set(value) {
+        this.GB = value
+    }
+var Number.T: String
+    get() {
+        return "${this}T"
+    }
+    set(value) {
+        this.T = value
+    }
