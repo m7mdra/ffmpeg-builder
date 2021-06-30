@@ -1,5 +1,7 @@
 import builder.FFMPEGBuilder
 import builder.ffmpeg
+import filter.BoxBlur
+import filter.SmartBlur
 
 
 fun main(args: Array<String>) {
@@ -8,7 +10,9 @@ fun main(args: Array<String>) {
 
         input("input.mp4")
         output("output.mp4")
-    /*        overwriteOutput()
+        overwriteOutput()
+        videoFilter(BoxBlur(5.0,0.8))
+    /*
         this + VerticalFlip()
         this + HorizontalFlip()
         videoFilter(NoiseReduction())
@@ -37,11 +41,7 @@ fun main(args: Array<String>) {
         */
     }
     val build = ffmpeg.build()
-    println(build)
-    println(100.k)
-    println(100.MB)
-    println(100.GB)
-    println(100.T)
+
 
 }
 
