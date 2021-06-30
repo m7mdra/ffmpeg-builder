@@ -3,12 +3,11 @@ import builder.ffmpeg
 
 
 fun main(args: Array<String>) {
-println(Color.Black.namedWithOpacity(0.5))
+
     val ffmpeg: FFMPEGBuilder = ffmpeg {
 
         input("input.mp4")
         output("output.mp4")
-
     /*        overwriteOutput()
         this + VerticalFlip()
         this + HorizontalFlip()
