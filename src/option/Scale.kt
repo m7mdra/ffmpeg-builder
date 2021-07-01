@@ -2,4 +2,9 @@ package option
 
 import option.model.Dimension
 
-class Scale(dimension: Dimension) : Option<Dimension>("-s", dimension)
+class Scale(private val dimension: Dimension) : Option {
+    override fun build(): String {
+        return "-s ${dimension.width}x${dimension.height}"
+
+    }
+}

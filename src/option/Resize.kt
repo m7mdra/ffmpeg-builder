@@ -2,4 +2,8 @@ package option
 
 import option.model.Dimension
 
-class Resize(size: Dimension) : Option<Dimension>(key = "-s", size)
+class Resize(private val size: Dimension) : Option {
+    override fun build(): String {
+        return "-s ${size.width}x${size.height}"
+    }
+}

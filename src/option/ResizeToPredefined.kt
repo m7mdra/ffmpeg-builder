@@ -2,4 +2,9 @@ package option
 
 import option.model.FrameSize
 
-class ResizeToPredefined(size: FrameSize) : Option<FrameSize>(key = "-s", size)
+class ResizeToPredefined(private val size: FrameSize) : Option{
+    override fun build(): String {
+        return  "-s ${size.name}"
+    }
+
+}

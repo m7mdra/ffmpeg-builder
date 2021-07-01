@@ -7,7 +7,7 @@ import java.io.File
 class FFMPEGBuilder {
     private var input: String? = null
     private var output: String? = null
-    private val options = mutableListOf<Option<*>>()
+    private val options = mutableListOf<Option>()
     private var overWriteOutput = false
     private var abortIfOutputExists = false
     private val videoFilters = mutableListOf<VideoFilter>()
@@ -41,38 +41,24 @@ class FFMPEGBuilder {
         videoFilters.add(filter)
     }
 
-    fun videoOption(option: Option<*>) {
+    fun videoOption(option: Option) {
         options.add(option)
     }
 
 
     fun build(): String {
         val stringBuilder = StringBuilder("/usr/local/bin/ffmpeg -i $input")
-        options.forEach {
-            when (it) {
-                is Overlay -> {
-                    stringBuilder.append(" -i ${it.input.path} ${it.key}${it.value.position.value}")
-                }
-                is FrameRate -> stringBuilder.append(" ${it.key} ${it.value}")
-                is BitRate -> stringBuilder.append(" ${it.key} ${it.value}")
-                is Resize -> stringBuilder.append(" ${it.key} ${it.value.width}x${it.value.height}")
-                is ResizeToPredefined -> stringBuilder.append(" ${it.key} ${it.value.name}")
-                is Scale -> stringBuilder.append(" ${it.key} ${it.value.width}x${it.value.height}")
-                is FileSize -> stringBuilder.append(" ${it.key} ${it.value}")
-
-            }
-        }
+        val optionList = options.map { it.build() }
+        stringBuilder.append(optionList.joinToString (separator = " ",prefix = " "))
         if (videoFilters.isNotEmpty()) {
             val buildFilters = videoFilters.map { it.build() }
             stringBuilder.append(" -vf \"")
 
 
 
-            if (buildFilters.size < 1) {
-                stringBuilder.append(buildFilters.joinToString { "," })
-            } else {
-                stringBuilder.append(buildFilters.joinToString())
-            }
+
+            stringBuilder.append(buildFilters.joinToString())
+
             stringBuilder.append("\"")
         }
         if (overWriteOutput) {

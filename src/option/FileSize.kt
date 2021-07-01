@@ -1,3 +1,8 @@
 package option
 
-class FileSize(size: Int) : Option<Int>(key = "-fs", size) {}
+class FileSize(private val size: Int) : Option {
+    override fun build(): String {
+        return "-fs $size"
+    }
+
+}

@@ -11,7 +11,7 @@ var Number.k: String
     }
 var Number.MB: String
     get() {
-        return "${this}k"
+        return "${this}MB"
     }
     set(value) {
         this.MB = value

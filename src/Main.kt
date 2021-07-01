@@ -1,9 +1,15 @@
 import builder.FFMPEGBuilder
 import builder.ffmpeg
-import filter.BoxBlur
-import filter.CustomFilter
-import filter.EQ
-import filter.SmartBlur
+import builder.plus
+import filter.*
+import filter.model.Degree
+import filter.model.DrawTextInput
+import option.*
+import option.model.FrameSize
+import option.model.RelativeDimension
+import option.model.TextRelativePosition
+import option.model.x
+import java.io.File
 
 
 fun main(args: Array<String>) {
@@ -13,9 +19,8 @@ fun main(args: Array<String>) {
         input("input.mp4")
         output("output.mp4")
         overwriteOutput()
-        videoFilter(EQ())
+/*        videoFilter(EQ())
         videoFilter(CustomFilter())
-        /*
             this + VerticalFlip()
             this + HorizontalFlip()
             videoFilter(NoiseReduction())
@@ -36,12 +41,11 @@ fun main(args: Array<String>) {
             )
             videoFilter(RelativeScale(RelativeDimension("iw/2", "ih/2")))
             videoFilter(Transpose(Degree.CounterCloseWise))*/
-/*        videoOption(ResizeToPredefined(FrameSize.qqvga))
-        videoOption(FrameRate(10))
-        videoOption(BitRate(10))
-        videoOption(FileSize(10 * 1024 * 1024))
-        videoOption(Scale(200 x 200))
-        */
+//        videoOption(ResizeToPredefined(FrameSize.qqvga))
+        videoOption(FrameRate(60))
+        videoOption(BitRate(10.MB))
+//        videoOption(FileSize(10 * 1024 * 1024))
+//        videoOption(Scale(200 x 200))
     }
     val build = ffmpeg.build()
     print(build)

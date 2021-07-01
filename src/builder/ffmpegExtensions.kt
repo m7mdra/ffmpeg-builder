@@ -13,7 +13,7 @@ operator fun FFMPEGBuilder.plus(filter: VideoFilter) {
     videoFilter(filter)
 }
 
-operator fun FFMPEGBuilder.plus(option: Option<*>) {
+operator fun FFMPEGBuilder.plus(option: Option) {
     videoOption(option)
 }
 

@@ -1,3 +1,5 @@
 package option
 
-abstract class Option<T>(val key: String, val value: T)
+interface Option {
+    fun build(): String
+}

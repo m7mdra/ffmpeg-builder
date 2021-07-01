@@ -1,3 +1,7 @@
 package option
 
-class FrameRate(rate: Int) : Option<Int>(key = "-r", rate) {}
+class FrameRate(private val rate: Int) : Option {
+    override fun build(): String {
+        return "-r $rate"
+    }
+}
