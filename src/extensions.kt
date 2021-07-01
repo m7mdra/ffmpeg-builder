@@ -30,3 +30,10 @@ var Number.T: String
     set(value) {
         this.T = value
     }
+var Number.dB:String
+    get() {
+        return "${this}dB"
+    }
+    set(value) {
+        this.dB = value
+    }

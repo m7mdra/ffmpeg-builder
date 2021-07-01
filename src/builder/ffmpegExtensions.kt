@@ -1,6 +1,6 @@
 package builder
 
-import filter.VideoFilter
+import videoFilter.VideoFilter
 import option.Option
 
 fun ffmpeg(builder: FFMPEGBuilder.() -> Unit): FFMPEGBuilder {
@@ -10,7 +10,7 @@ fun ffmpeg(builder: FFMPEGBuilder.() -> Unit): FFMPEGBuilder {
 }
 
 operator fun FFMPEGBuilder.plus(filter: VideoFilter) {
-    videoFilter(filter)
+    filter(filter)
 }
 
 operator fun FFMPEGBuilder.plus(option: Option) {

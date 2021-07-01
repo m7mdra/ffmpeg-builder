@@ -1,6 +1,7 @@
 package builder
 
-import filter.VideoFilter
+import audioFilter.AudioFilter
+import videoFilter.VideoFilter
 import option.*
 import java.io.File
 
@@ -11,6 +12,7 @@ class FFMPEGBuilder {
     private var overWriteOutput = false
     private var abortIfOutputExists = false
     private val videoFilters = mutableListOf<VideoFilter>()
+    private val audioFilters = mutableListOf<AudioFilter>()
 
     fun input(path: String) {
         this.input = path
@@ -37,8 +39,11 @@ class FFMPEGBuilder {
 
     }
 
-    fun videoFilter(filter: VideoFilter) {
+    fun filter(filter: VideoFilter) {
         videoFilters.add(filter)
+    }
+    fun filter(filter: AudioFilter) {
+        audioFilters.add(filter)
     }
 
     fun videoOption(option: Option) {
@@ -63,6 +68,17 @@ class FFMPEGBuilder {
         }
         if (overWriteOutput) {
             stringBuilder.append(" -y ")
+        }
+        if(audioFilters.isNotEmpty()){
+            val buildFilters = audioFilters.map { it.build() }
+            stringBuilder.append(" -af \"")
+
+
+
+
+            stringBuilder.append(buildFilters.joinToString())
+
+            stringBuilder.append("\"")
         }
         stringBuilder.append(" $output")
 
