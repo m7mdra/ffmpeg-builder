@@ -2,8 +2,8 @@ package filter
 
 import filter.model.Degree
 
-class Transpose(val input: Degree) : VideoFilter<Degree>("transpose", input) {
+class Transpose(val input: Degree) : VideoFilter {
     override fun build(): String {
-        return "$name=${input.value}"
+        return "transpose=${input.value}"
     }
 }

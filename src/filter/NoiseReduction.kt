@@ -1,7 +1,7 @@
 package filter
 
-class NoiseReduction : VideoFilter<Unit>("hqdn3d", Unit) {
+class NoiseReduction : VideoFilter {
     override fun build(): String {
-        return name
+        return "hqdn3d"
     }
 }

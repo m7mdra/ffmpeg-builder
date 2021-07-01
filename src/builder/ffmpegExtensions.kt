@@ -9,7 +9,7 @@ fun ffmpeg(builder: FFMPEGBuilder.() -> Unit): FFMPEGBuilder {
     return ffmpegBuilder
 }
 
-operator fun FFMPEGBuilder.plus(filter: VideoFilter<*>) {
+operator fun FFMPEGBuilder.plus(filter: VideoFilter) {
     videoFilter(filter)
 }
 

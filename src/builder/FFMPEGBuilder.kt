@@ -10,7 +10,7 @@ class FFMPEGBuilder {
     private val options = mutableListOf<Option<*>>()
     private var overWriteOutput = false
     private var abortIfOutputExists = false
-    private val videoFilters = mutableListOf<VideoFilter<*>>()
+    private val videoFilters = mutableListOf<VideoFilter>()
 
     fun input(path: String) {
         this.input = path
@@ -37,7 +37,7 @@ class FFMPEGBuilder {
 
     }
 
-    fun videoFilter(filter: VideoFilter<*>) {
+    fun videoFilter(filter: VideoFilter) {
         videoFilters.add(filter)
     }
 

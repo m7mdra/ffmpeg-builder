@@ -1,7 +1,7 @@
 package filter
 
-class HorizontalFlip : VideoFilter<Unit>("hflip", Unit) {
+class HorizontalFlip : VideoFilter {
     override fun build(): String {
-        return name
+        return "hflip"
     }
 }

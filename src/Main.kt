@@ -1,6 +1,7 @@
 import builder.FFMPEGBuilder
 import builder.ffmpeg
 import filter.BoxBlur
+import filter.CustomFilter
 import filter.EQ
 import filter.SmartBlur
 
@@ -13,6 +14,7 @@ fun main(args: Array<String>) {
         output("output.mp4")
         overwriteOutput()
         videoFilter(EQ())
+        videoFilter(CustomFilter())
         /*
             this + VerticalFlip()
             this + HorizontalFlip()
