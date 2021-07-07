@@ -1,4 +1,4 @@
-class Color(private val name: String, private val hex: Int, var opacity: Double = 1.0) {
+class Color(private val name: String = "", private val hex: Int) {
     companion object {
 
         val AliceBlue = Color(name = "AliceBlue", 0xf0f8ff)
@@ -144,24 +144,16 @@ class Color(private val name: String, private val hex: Int, var opacity: Double 
     }
 
     fun namedWithOpacity(opacity: Double): String {
-        return "$name@$opacity"
+        return "${name.toLowerCase()}@$opacity"
+    }
+    fun rgba():String{
+
+        return "$hex"
     }
 
-    fun hex(): Int {
-        return hex + (opacity * 100).toInt()
-    }
-    fun hexWithOpacity(opacity: Double):Int{
-        return hex + (opacity * 100).toInt()
-
-    }
     fun named(): String {
 
-        return "$name@$opacity"
+        return name.toLowerCase()
     }
-}
-
-fun Color.withOpacity(value: Double): Color {
-    opacity = value
-    return this
 }
 
