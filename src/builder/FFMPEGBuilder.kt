@@ -75,7 +75,6 @@ class FFMPEGBuilder {
 
 
 
-
             stringBuilder.append(buildFilters.joinToString())
 
             stringBuilder.append("\"")
