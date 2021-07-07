@@ -3,8 +3,10 @@ import builder.FFMPEGBuilder
 import builder.ffmpeg
 import option.*
 import videoFilter.DrawText
+import videoFilter.Interlace
 import videoFilter.NoiseReduction
 import videoFilter.model.DrawTextInput
+import videoFilter.model.InterlaceType
 import java.awt.Color
 
 
@@ -15,7 +17,7 @@ fun main(args: Array<String>) {
         input("input.mp4")
         output("output.mp4")
         overwriteOutput()
-        filter(DrawText(DrawTextInput("Hello bros", "font.otf", 100,showBox = true)))
+        filter(Interlace(InterlaceType.Prog))
 
     }
     val build = ffmpeg.build()
