@@ -46,7 +46,7 @@ class FFMPEGBuilder {
         audioFilters.add(filter)
     }
 
-    fun videoOption(option: Option) {
+    fun option(option: Option) {
         options.add(option)
     }
 

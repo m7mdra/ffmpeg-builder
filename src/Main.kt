@@ -13,8 +13,8 @@ fun main(args: Array<String>) {
         output("output.mp4")
         overwriteOutput()
 
-        videoOption(FrameRate(30))
-        videoOption(BitRate(1.5.MB))
+        option(FrameRate(30))
+        option(BitRate(1.5.MB))
         filter(Volume((-10).dB))
         filter(NoiseReduction())
 
