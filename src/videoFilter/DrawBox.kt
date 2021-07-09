@@ -24,7 +24,3 @@ class DrawBox(private val input: DrawBoxInput) : VideoFilter {
     }
 }
 
-private operator fun StringBuilder.plus(s: String) {
-    this.append(s)
-}
-
