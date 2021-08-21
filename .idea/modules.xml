@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ffmpeg-builder.iml" filepath="$PROJECT_DIR$/ffmpeg-builder.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/example/ffmpeg.example.iml" filepath="$PROJECT_DIR$/.idea/modules/example/ffmpeg.example.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/ffmpeg.lib.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/ffmpeg.lib.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/ffmpeg.lib.test.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/ffmpeg.lib.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library.iml" filepath="$PROJECT_DIR$/.idea/modules/library.iml" group="ffmpeg-builder/library" />
     </modules>
   </component>
 </project>
