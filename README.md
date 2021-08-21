@@ -98,7 +98,7 @@ Custom Video Filter
 ``` kotlin
 class CustomVideoFilter(val value:Any) : VideoFilter {
     override fun build(): String {
-        return  "filterName=$value"
+        return  "filter=$value"
     }
 }
 ```
@@ -106,7 +106,7 @@ Custom Audio Filter
 ``` kotlin
 class CustomAudioFilter(val value:Any) : AudioFilter {
     override fun build(): String {
-        return  "filterName=$value"
+        return  "filter=$value"
     }
 }
 ```
@@ -114,7 +114,7 @@ Custom Option
 ``` kotlin
 class CustomOption(val value:Any) : Option {
     override fun build(): String {
-        return  "filterName=$value"
+        return  "option=$value"
     }
 }
 ```
