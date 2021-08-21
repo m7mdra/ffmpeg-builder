@@ -146,10 +146,6 @@ class Color(private val name: String = "", private val hex: Int) {
     fun namedWithOpacity(opacity: Double): String {
         return "${name.toLowerCase()}@$opacity"
     }
-    fun rgba():String{
-
-        return "$hex"
-    }
 
     fun named(): String {
 

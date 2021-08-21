@@ -1,6 +1,6 @@
 package option
 
-class BitRate : Option {
+class Bitrate : Option {
     private val rate: Any
 
     constructor(rate: Int) {
