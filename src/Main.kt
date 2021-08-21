@@ -23,8 +23,3 @@ fun main(args: Array<String>) {
     println(builder.build())
 }
 
-
-fun changeAlpha(origColor: Int, userInputedAlpha: Int): String {
-
-    return (origColor and 0x00ffffff or (userInputedAlpha shl 24)).toUInt().toString(16)
-}
