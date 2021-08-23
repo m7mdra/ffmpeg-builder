@@ -1,7 +1,8 @@
-package builder
+package com.m7mdra.ffmpegbuilder.builder
 
+import builder.FFMPEGBuilder
+import com.m7mdra.ffmpegbuilder.option.Option
 import com.m7mdra.ffmpegbuilder.videoFilters.VideoFilter
-import option.Option
 
 fun ffmpeg(builder: FFMPEGBuilder.() -> Unit): FFMPEGBuilder {
     val ffmpegBuilder = FFMPEGBuilder()

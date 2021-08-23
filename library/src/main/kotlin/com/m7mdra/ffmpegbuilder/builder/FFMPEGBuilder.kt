@@ -1,8 +1,8 @@
 package builder
 
 import audioFilter.AudioFilter
+import com.m7mdra.ffmpegbuilder.option.Option
 import com.m7mdra.ffmpegbuilder.videoFilters.VideoFilter
-import option.*
 import java.io.File
 
 class FFMPEGBuilder {

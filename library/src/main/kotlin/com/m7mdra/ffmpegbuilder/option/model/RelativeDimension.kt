@@ -7,7 +7,7 @@ class RelativeDimension private constructor(val widthWithModifier: String, val h
         }
 
         fun divideBy(width: Double, height: Double): RelativeDimension {
-            return RelativeDimension("iw*$width", "ih*$height")
+            return RelativeDimension("iw/$width", "ih/$height")
         }
 
     }
