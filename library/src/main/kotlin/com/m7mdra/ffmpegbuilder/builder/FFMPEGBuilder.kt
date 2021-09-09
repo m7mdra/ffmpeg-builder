@@ -52,7 +52,7 @@ class FFMPEGBuilder {
 
 
     fun build(): String {
-        val stringBuilder = StringBuilder("/usr/local/bin/ffmpeg -i $input")
+        val stringBuilder = StringBuilder("ffmpeg -i $input")
         val optionList = options.map { it.build() }
         stringBuilder.append(optionList.joinToString (separator = " ",prefix = " "))
         if (videoFilters.isNotEmpty()) {
@@ -66,9 +66,7 @@ class FFMPEGBuilder {
 
             stringBuilder.append("\"")
         }
-        if (overWriteOutput) {
-            stringBuilder.append(" -y ")
-        }
+
         if(audioFilters.isNotEmpty()){
             val buildFilters = audioFilters.map { it.build() }
             stringBuilder.append(" -af \"")
@@ -78,6 +76,10 @@ class FFMPEGBuilder {
             stringBuilder.append(buildFilters.joinToString())
 
             stringBuilder.append("\"")
+        }
+
+        if (overWriteOutput) {
+            stringBuilder.append(" -y ")
         }
         stringBuilder.append(" $output")
 

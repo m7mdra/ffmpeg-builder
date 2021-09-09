@@ -1,5 +1,6 @@
 package com.m7mdra.ffmpegbuilder.builder
 
+import audioFilter.AudioFilter
 import builder.FFMPEGBuilder
 import com.m7mdra.ffmpegbuilder.option.Option
 import com.m7mdra.ffmpegbuilder.videoFilters.VideoFilter
@@ -11,6 +12,10 @@ fun ffmpeg(builder: FFMPEGBuilder.() -> Unit): FFMPEGBuilder {
 }
 
 operator fun FFMPEGBuilder.plus(filter: VideoFilter) {
+    filter(filter)
+}
+
+operator fun FFMPEGBuilder.plus(filter: AudioFilter) {
     filter(filter)
 }
 
