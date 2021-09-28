@@ -126,6 +126,7 @@ And thats it.
  - Support more Options
  - Support more video/audio filters
  - Support filter-complex filters
+ - Add presets
  - Add example project
  - Testing
  - Distribute binaries
