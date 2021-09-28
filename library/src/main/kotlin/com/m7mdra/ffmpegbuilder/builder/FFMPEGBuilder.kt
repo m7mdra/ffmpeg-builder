@@ -11,6 +11,7 @@ class FFMPEGBuilder {
     private val options = mutableListOf<Option>()
     private var overWriteOutput = false
     private var abortIfOutputExists = false
+    private var addPrefixFfmpeg = false
     private val videoFilters = mutableListOf<VideoFilter>()
     private val audioFilters = mutableListOf<AudioFilter>()
 
@@ -24,6 +25,9 @@ class FFMPEGBuilder {
 
     fun overwriteOutput() {
         overWriteOutput = true
+    }
+    fun prefixFfmpeg(){
+        addPrefixFfmpeg = true
     }
 
     fun abortIfOutputExists() {
@@ -52,37 +56,29 @@ class FFMPEGBuilder {
 
 
     fun build(): String {
-        val stringBuilder = StringBuilder("ffmpeg -i $input")
+        val stringBuilder = StringBuilder()
+        if(addPrefixFfmpeg){
+            stringBuilder.append("ffmpeg")
+        }
+        stringBuilder.append("-i $input")
         val optionList = options.map { it.build() }
         stringBuilder.append(optionList.joinToString (separator = " ",prefix = " "))
         if (videoFilters.isNotEmpty()) {
             val buildFilters = videoFilters.map { it.build() }
             stringBuilder.append(" -vf \"")
-
-
-
-
             stringBuilder.append(buildFilters.joinToString())
-
             stringBuilder.append("\"")
         }
-
         if(audioFilters.isNotEmpty()){
             val buildFilters = audioFilters.map { it.build() }
             stringBuilder.append(" -af \"")
-
-
-
             stringBuilder.append(buildFilters.joinToString())
-
             stringBuilder.append("\"")
         }
-
         if (overWriteOutput) {
             stringBuilder.append(" -y ")
         }
         stringBuilder.append(" $output")
-
         return stringBuilder.toString()
     }
 
