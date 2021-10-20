@@ -92,7 +92,7 @@ For now the library supports only a subset of options,video filter, audio filter
 
 
 ### Add New Option, VideoFilter or AudioFilter?
-Simply implement the one of theses 'Option','VideoFilter','AudioFilter' interfaces depending on your usecase
+Simply implement the one of theses `Option` , `VideoFilter` , `AudioFilter` interfaces depending on your usecase
 
 Custom Video Filter
 ``` kotlin
