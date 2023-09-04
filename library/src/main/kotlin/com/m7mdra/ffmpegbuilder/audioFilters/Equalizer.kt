@@ -1,11 +1,13 @@
+package com.m7mdra.ffmpegbuilder.audioFilters
+
+import audioFilter.AudioFilter
+import com.m7mdra.ffmpegbuilder.audioFilters.model.EqualizerSetting
+
 class Equalizer(
     private val equalizerSettings: List<EqualizerSetting>
 ) : AudioFilter {
     override fun build(): String {
-        // Combine equalizer settings into a comma-separated string
-        val settingsString = equalizerSettings.map{ it.value() }.joinToString(":")
-        
-        // Build the FFmpeg filter string
+        val settingsString = equalizerSettings.joinToString(":") { it.value() }
         return "equalizer=$settingsString"
     }
 }
